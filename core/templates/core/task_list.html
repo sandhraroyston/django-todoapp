@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+          body{
+        font-family:'EB Garamond', serif;
+        font-size:20px;
+        }
+        table { box-shadow: 5px 2px 1px #999; }
+        </style>
+    </head>
+<body>
+
+
+<nav class="navbar navbar-dark bg-dark ">
+   <h6 class="text-white"><b style="font-size:25px;margin-left:30px;">TO-DO LIST</b></h6>
+ <form method="get" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" name="search_item" type="search" placeholder="Search" aria-label="Search" value='{{ request.GET.search_item}}'>
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+<div style="margin-top:50px;" class="container text-center">
+
+<table class="table table-hover ">
+  <thead>
+
+<tr>
+    <th colspan="3">
+ {% if messages %}
+   {% for message in messages %}
+     <div class="alert alert-{{message.tags}}">
+       {{message}}
+     </div>
+   {% endfor %}
+{% endif %}
+    </th></tr>
+    <tr>
+      <th colspan="2"><h1>Hello {{user.username}}</h1></th>
+      <th><a href="{% url 'create' %}">  <input type="button" class="btn btn-primary btn-sm" value="Add New Task"></a></th>
+      <th><a href="{% url 'logout' %}"><input type="button" class="btn btn-danger btn-sm" value="Logout"></a></th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in tasks %}
+    <tr>
+        {% if i.status == 'done' %}
+      <th scope="row"><s><i>{{i.title}}</s></i></th>
+
+        {% else %}
+        <th scope="row">{{i.title}}</th>
+        {% endif %}
+
+        <td ><a href="{% url 'update' i.id %}"><input type="button" class="btn btn-warning btn-sm" value="Update"></a></td>
+        <td ><a href="{% url 'detail' i.id %}"><input type="button" class="btn btn-dark btn-sm" value="Detail"></a></td>
+      <td ><a href="{% url 'delete' i.id %}"><input type="button" class="btn btn-danger btn-sm" value="Delete"></a></td>
+
+    </tr>
+  <tr>
+      <td></td>
+      <td style="font-size:15px;">{{i.remaining_days}} days remaining</td>
+  </tr>
+  {% endfor %}
+
+
+  </tbody>
+</table>
+    </div>
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

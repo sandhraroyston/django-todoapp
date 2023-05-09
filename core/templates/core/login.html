@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h3>User login</h3>
+<hr>
+  {% if messages %}
+   {% for message in messages %}
+     <div class="alert alert-{{message.tags}}">
+       {{message}}
+     </div>
+{% endfor %}
+    {% endif %}
+<form method="post" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-primary" type="submit" value="login">
+    <p><small>Not a user.?<a href="{% url 'register' %}">Register</a></small></p>
+</form>
+</div>
+{% endblock %}
